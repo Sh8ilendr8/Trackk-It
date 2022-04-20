@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Trackk It</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/bootstrap-social.css">
+  <link rel="stylesheet" href="css/sty.css">
+</head>
+
+<body>
+  <% if(success!=""){ %>
+  <div class="alert alert-success" role="alert">
+  <%=success%>
+  </div>
+  <% } %>
+
+  <h1>Sorry!!!</h1>
+  <p>We could not find your meal in our database</p>
+  <p>But no worries</p>
+
+  <h2>Add you own personalized meal!!!</h2><br>
+
+  <h2>My personalized meal </h2>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+
+          <!-- Makes POST request to /register route -->
+          <form action="/addfood" method="POST">
+            <div class="form-group">
+              <label for="name">FoodName</label>
+              <input type="text" class="form-control" name="foodname" required>
+            </div>
+            <div class="form-group">
+              <label for="calories">Calories</label>
+              <input type="number" class="form-control" name="calories" required>
+            </div>
+            <div class="form-group">
+              <label for="protein">Protein(g)</label>
+              <input type="number" class="form-control" name="protein" required>
+            </div>
+            <div class="form-group">
+              <label for="carbohydrate">Carbohydrate(g)</label>
+              <input type="number" class="form-control" name="carbohydrate" required>
+            </div>
+            <div class="form-group">
+              <label for="cholestrol">Cholesterol(mg)</label>
+              <input type="number" class="form-control" name="cholestrol" required>
+            </div>
+            <div class="form-group">
+              <label for="fats">Fats(g)</label>
+              <input type="number" class="form-control" name="fat" required>
+            </div>
+
+
+
+
+
+
+            <button type="submit" class="btn btn-primary"  href="/addfood">Submit</button>
+            <a   href="/food" style="float:right">Go back</a>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+  </html>

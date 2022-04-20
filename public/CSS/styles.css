@@ -1,0 +1,177 @@
+
+h3 {
+  font-family: "Monserrat-Bold";
+}
+
+a {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+p {
+  color: #8f8f8f;
+}
+
+body {
+  text-align : center;
+  font-style: "Montserrat";
+}
+
+#title {
+
+  background-image: -webkit-linear-gradient(60deg, #004c3f  40%,#008060 60% );
+
+  color: #fff;
+}
+
+.about{
+  color : white;
+}
+.big-heading{
+  font-family: "Montserrat-Black";
+  font-size: 3.4rem;
+  line-height: 1.5;
+
+}
+.bottom-container {
+  margin-top: 60px;
+background-image: -webkit-linear-gradient(60deg, #004c3f   40%,#008060 60% );
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-left:110px;
+}
+
+.copy-right{
+
+  color: white;
+}
+.container-fluid {
+    background-image: -webkit-linear-gradient(60deg, #004c3f  40%,#008060 60% );
+  padding : 3% 15%;
+  padding-bottom: 12%;
+
+}
+
+.container-profile{
+  background-image: -webkit-linear-gradient(60deg, #004c3f  40%,#008060 60% );
+padding : 3% 15%;
+padding-bottom: 2%;
+
+}
+
+.calculate-button {
+  margin: 5% 3% 5% 0;
+}
+
+.pricing-column {
+  padding: 3% 2%;
+  text-align: center;
+}
+
+.icon {
+    color:  #004c3f ;
+
+  margin-bottom: 1rem;
+}
+
+.icon:hover {
+color: #008060 ;
+}
+
+.navbar {
+  padding: 0 0 4.5rem;
+}
+
+.navbar-brand {
+  font-family: 'Ubuntu';
+  font-size: 2.2rem;
+  font-weight: bold
+}
+
+.nav-item {
+  padding: 0 18px;
+}
+.Navabar{
+  padding-left: 20%;
+}
+
+.title-image {
+  width: 60%;
+  height: 80%;
+  margin-left: 180px;
+}
+
+.testimonial-image {
+  width: 10%;
+  border-radius: 500%;
+  margin: 20px;
+}
+#bmi{
+  padding-left: 20%;
+  padding-top: 8%;
+   background-image: #ffdd99;
+}
+
+#features {
+/*  text-align : center;*/
+  padding: 7% 15%;
+}
+#new{
+  padding-bottom: 3%;
+}
+
+#press {
+  background-color: #ef8172;
+  padding-bottom: 3%
+}
+#about{
+  background-color: #ff4c68;
+  ;
+}
+
+.feature-box {
+  padding: 5%;
+}
+#navbarSupportedContent{
+
+
+}
+
+/*TESTIMONIALS*/
+#problem{
+  padding-top : 10%;
+  padding-bottom : 1%;
+  padding-left: 10%;
+}
+#testimonials {
+background-image: -webkit-linear-gradient(60deg, #004c3f 40%,#008060 60% );
+  color: #fff;
+}
+#title{
+  text-align: left;
+
+
+}
+.col{
+  align-self: center;
+}
+/*Sign up section */
+#Signn-up {
+
+  /*padding-top: 100px;*/
+  padding-bottom: 10%;
+  padding-left: 40%;
+  padding-right: 30%;
+
+@media(min-width:30%
+  #features {
+    text-align: center;
+  }
+  #title{
+    text-align: center;
+  }
+  .title-image{
+  margin-right: 40%;
+    image-orientation: center;
+    position : static;
+  }
+}

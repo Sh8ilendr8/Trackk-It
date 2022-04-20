@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Trackk It</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/bootstrap-social.css">
+  <link rel="stylesheet" href="css/sty.css">
+</head>
+
+<body>
+  <% if(success!=""){ %>
+ <div class="alert alert-success" role="alert">
+ <%=success%>
+</div>
+<% } %>
+
+  <h1>Sign Up</h1>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+
+          <!-- Makes POST request to /register route -->
+          <form action="/register" method="POST">
+            <div class="form-group">
+              <i class="fa fa-envelope icon" style="color: dodgerblue"></i>
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="username"  pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,}$"
+              title="Enter valid email id" required>
+            </div>
+            <div class="form-group">
+              <i class="fa fa-key icon" style="color: dodgerblue"></i>
+              <label for="password">Password</label>
+              <input type="password"  id="psw" class="form-control"   name="password"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+            </div>
+            <button type="submit" class="btn btn-primary"  href="/login">Sign Up</button>
+              <a   href="/" style="float:right">Go to home page</a>
+          </form>
+
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="message" style="display:none" >
+  <h3>Password must contain the following:</h3>
+  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+  <p id="number" class="invalid">A <b>number</b></p>
+  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+</div>
+
+
+<script type="text/javascript">
+var myInput = document.getElementById("psw");
+
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+</script>
+  </body>
+</html>

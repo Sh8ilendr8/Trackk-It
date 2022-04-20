@@ -1,0 +1,45 @@
+
+
+#addfood{
+  font-family: Arial;
+  color: white;
+
+
+}
+
+
+
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+.leftside, .rightside{
+  height:68vh;
+  width:100%;
+  padding-top:5%;
+
+}
+@media screen and (min-width:768px)
+{
+  .leftside, .rightside {
+    height:68vh
+  }
+}
+
+
+
+.leftside{
+  background: #FFFEF2;
+
+}
+
+.rightside{
+  background: #FFFEF2;
+
+}
