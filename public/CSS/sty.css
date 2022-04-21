@@ -12,12 +12,7 @@ padding-top: 2%;
     text-align: center;
 }
 
-.secret-text {
-  text-align: center;
-  font-size: 5rem;
-  color: #fff;
-  background-color: #000;
-}
+
 
 .contact{
   background-image: -webkit-linear-gradient(60deg, #004c3f   40%,#008060 60% );
