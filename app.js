@@ -90,9 +90,9 @@ app.get("/register", function(req, res){
   res.render("register",{success:""});
 });
 
-app.get("/information", function(req, res){
-  res.render("information",{success:""});
-});
+// app.get("/information", function(req, res){
+//   res.render("information",{success:""});
+// });
 
 app.get("/login", function(req, res){
   res.render("login");
@@ -438,6 +438,17 @@ app.get("/logout", function(req, res){
 });
 
 
+const informationSchema = new mongoose.Schema ({
+  email: String,
+  name: String,
+  height: Number,
+  weight: Number,
+  bmi:Number,
+  bmr:Number,
+  idealcal:Number
+});
+
+const Information = new mongoose.model("Information", informationSchema);
 
 
 
@@ -445,13 +456,42 @@ app.get("/logout", function(req, res){
 
 app.post("/register", function(req, res){
 
+  var h= req.body.height;
+  var w= req.body.weight;
+  var g=req.body.gender;
+  var f=req.body.fat;
+  var a=req.body.activity;
+  var go= req.body.goal;
+  var bm=( w/((h*h)/10000)).toFixed(2);
+  var mr=Math.round( w*(parseFloat(g))*24*(parseFloat(f))*(parseFloat(a)));
+  var ic=0;
+
+  if(go==="1"){
+   ic=mr- 400;}
+  else if(go==="2"){
+   ic=mr+400;}
+  else{
+   ic=mr;}
+   const newInformation= new Information({
+
+     email: req.body.username,
+     name: req.body.name,
+     height: h,
+     weight: w,
+     bmi: bm,
+     bmr: mr,
+     idealcal: ic
+  });
+
+  newInformation.save();
+
   User.register({username:req.body.username}, req.body.password, function(err, user){
     if (err) {
       res.render("register",{success:"Sorry!!! User email id  is already registered"} );
     } else {
       passport.authenticate("local")(req, res, function(){
-        req.logout();
-        res.redirect("/login");
+        // req.logout();
+        res.redirect("/profile");
       });
     }
   });
@@ -471,20 +511,20 @@ app.post("/login", function(req, res){
     res.render("login",{success : "Error !!!  Please fill all the credentials."});
     } else {
       passport.authenticate("local")(req, res, function(){
-        Information.find({email:req.body.username},function(err,data){
-          if(err)
-          {
-            console.log(err);
-          }
-          if(data.length==0)
-          {
-            res.render("information",{success:"Please fill the form before login"});
-          }
-          else{
+        // Information.find({email:req.body.username},function(err,data){
+        //   if(err)
+        //   {
+        //     console.log(err);
+        //   }
+        //   if(data.length==0)
+        //   {
+        //     res.render("information",{success:"Please fill the form before login"});
+        //   }
+        //   else{
 
                  res.redirect("/profile");
-               }
-      });
+
+
   });
 }
 });
@@ -768,7 +808,7 @@ else{
     if(perfoods.length!=0)
     {
       var v=0, w=0, x=0, y=0, z=0;
-    if(ser=="")
+    if(isNaN(parseFloat(ser)))
     {
       v= parseFloat(perfoods[0].calorie);
        w= parseFloat(perfoods[0].protien);
@@ -1002,17 +1042,17 @@ Exercisedata.find({name:req.user.username, date: day},function(err,exercises)
 
 });
 
-const informationSchema = new mongoose.Schema ({
-  email: String,
-  name: String,
-  height: Number,
-  weight: Number,
-  bmi:Number,
-  bmr:Number,
-  idealcal:Number
-});
+// const informationSchema = new mongoose.Schema ({
+//   email: String,
+//   name: String,
+//   height: Number,
+//   weight: Number,
+//   bmi:Number,
+//   bmr:Number,
+//   idealcal:Number
+// });
 
-const Information = new mongoose.model("Information", informationSchema);
+// const Information = new mongoose.model("Information", informationSchema);
 
 app.post("/information", function(req, res){
 

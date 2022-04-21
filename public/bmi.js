@@ -5,6 +5,7 @@ function Calculate(){
     var result = parseFloat(weight) /(parseFloat(height)*parseFloat(height)/10000);
 
     if(!isNaN(result)){
+       result=result.toFixed(2);
         document.getElementById("bmi-output").innerHTML = result;
         if(result < 18.5){
             document.getElementById("bmi-status").innerHTML = "Underweight";
