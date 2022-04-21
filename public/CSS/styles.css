@@ -29,7 +29,7 @@ body {
 .big-heading{
   font-family: "Montserrat-Black";
   font-size: 6.0rem;
-  line-height: 3.5;
+  line-height: 1.5;
 
 }
 .bottom-container {
@@ -132,7 +132,7 @@ color: #008060 ;
   padding: 5%;
 }
 #navbarSupportedContent{
-
+ font-size : 2rem;
 
 }
 
