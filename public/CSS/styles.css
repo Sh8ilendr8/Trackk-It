@@ -14,7 +14,7 @@ p {
 body {
   text-align : center;
   font-style: "Montserrat";
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 #title {
@@ -29,7 +29,7 @@ body {
 }
 .big-heading{
   font-family: "Montserrat-Black";
-  font-size: 6.0rem;
+  font-size: 5rem;
   line-height: 1.5;
 
 }
