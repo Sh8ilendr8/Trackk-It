@@ -28,8 +28,8 @@ body {
 }
 .big-heading{
   font-family: "Montserrat-Black";
-  font-size: 3.4rem;
-  line-height: 1.5;
+  font-size: 6.0rem;
+  line-height: 3.5;
 
 }
 .bottom-container {
@@ -83,7 +83,7 @@ color: #008060 ;
 
 .navbar-brand {
   font-family: 'Ubuntu';
-  font-size: 2.2rem;
+  font-size: 5rem;
   font-weight: bold
 }
 
