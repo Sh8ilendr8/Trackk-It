@@ -501,6 +501,16 @@ const foodSchema = new mongoose.Schema ({
 });
 const Fooddata = new mongoose.model("Fooddata", foodSchema);
 
+const perfoodSchema = new mongoose.Schema ({
+  name: String,
+  calorie: Number,
+  protien: Number,
+  carbohydrate: Number,
+  fat: Number,
+  cholestrol: Number
+});
+const Perfooddata = new mongoose.model("Perfooddata", perfoodSchema);
+
 
 const dailySchema = new mongoose.Schema ({
   name: String,
@@ -524,10 +534,24 @@ app.post("/addfood",function(req,resp){
   let day= date+"-"+month+"-"+year;
 
 
+  const newperfood= new Perfooddata({
+    name: req.body.foodname,
+    calorie: req.body.calories,
+    protien:req.body.protein,
+    carbohydrate:req.body.carbohydrate,
+    fat: req.body.fat,
+    cholestrol: req.body.cholestrol
+  });
+
+    newperfood.save();
+
+
+
   Fooddata.find({name:req.user.username, date: day},function(err,foods)
   {
     if(err){
     console.log(err);}
+
     if(foods.length==0)
     {
 
@@ -611,7 +635,7 @@ app.post("/addfood",function(req,resp){
 
       newdaily.save();
     });
-     resp.render("addfood",{success : "Thank you !!!  Your personalized meal is saved"});
+     resp.render("addfood",{success : "Thank you !!!  Your personalized meal is saved. Now onwards you can simply write your personilized food name along with serving size (how many multiple of serving you had)"});
 }
 });
 });
@@ -737,9 +761,135 @@ var da= await d;
 });
 }
 else{
+  Perfooddata.find({name:query},function(err,perfoods)
+  {
+    if(err){
+    console.log(err);}
+    if(perfoods.length!=0)
+    {
+      var v=0, w=0, x=0, y=0, z=0;
+    if(ser=="")
+    {
+      v= parseFloat(perfoods[0].calorie);
+       w= parseFloat(perfoods[0].protien);
+       x= parseFloat(perfoods[0].carbohydrate);
+       y= parseFloat(perfoods[0].fat);
+       z= parseFloat(perfoods[0].cholestrol);
+    }
+    else
+    {
+     v= parseFloat(perfoods[0].calorie) * parseFloat(ser);
+     w= parseFloat(perfoods[0].protien) * parseFloat(ser);
+     x= parseFloat(perfoods[0].carbohydrate) * parseFloat(ser);
+     y= parseFloat(perfoods[0].fat) * parseFloat(ser);
+     z= parseFloat(perfoods[0].cholestrol) * parseFloat(ser);
+    }
+    // for(var i=0; i<dy.items.length; i++)
+    // {
+    //   v= v+ dy.items[i].calories;
+    //   w= w+ dy.items[i].protein_g;
+    //   x=x+ dy.items[i].carbohydrates_total_g;
+    //   y=y+ dy.items[i].fat_total_g;
+    //   z=z+ dy.items[i].cholesterol_mg;
+    // }
+
+
+
+let date_ob = new Date();
+let date = ("0" + date_ob.getDate()).slice(-2);
+let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+let year = date_ob.getFullYear();
+let day= date+"-"+month+"-"+year;
+Fooddata.find({name:req.user.username, date: day},function(err,foods)
+{
+ if(err){
+ console.log(err);}
+ if(foods.length==0)
+ {
+ const newfood= new Fooddata({
+ date:day,
+ name:req.user.username,
+ calorie: v,
+ protien:w,
+ carbohydrate:x,
+ fat: y,
+ cholestrol: z
+ });
+ newfood.save();
+
+ const newdaily= new Dailydata({
+   name: req.user.username,
+   date:day,
+   calorie: v,
+   protien:w,
+   carbohydrate:x,
+   fat: y,
+   cholestrol: z
+ });
+
+   newdaily.save();
+
+ resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
+}
+else
+{
+ var c = parseFloat(foods[0].calorie);
+ c= c+   parseFloat(v);
+
+ var p= parseFloat(foods[0].protien);
+ p= p+ parseFloat(w);
+
+ var ch= parseFloat(foods[0].cholestrol);
+ ch= ch+ parseFloat(z);
+
+ var ca= parseFloat(foods[0].carbohydrate);
+ ca= ca+ parseFloat(x);
+
+ var f= parseFloat(foods[0].fat);
+ f= f+ parseFloat(y);
+
+  Fooddata.updateOne({name:req.user.username, date: day},{$set:{calorie:c, protien:p, cholestrol:ch, carbohydrate: ca, fat:f}},function(err){
+   if(err){
+   console.log(err);}
+ });
+
+ Dailydata.find({name:req.user.username, date: day},function(err,daily){
+   var l =daily.length;
+   var f =(daily[l-1].calorie);
+   f=f+ v;
+   var g =(daily[l-1].protien);
+   g=g+ w;
+   var h =(daily[l-1].carbohydrate);
+   h=h+ x;
+   var i =(daily[l-1].fat);
+   i=i+ y;
+   var j =(daily[l-1].cholestrol);
+   j=j+ z;
+
+
+
+ const newdaily= new Dailydata({
+   name: req.user.username,
+   date:day,
+   calorie: f,
+   protien:g,
+   carbohydrate:h,
+   fat: i,
+   cholestrol:j
+ });
+
+   newdaily.save();
+ });
+
+resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
+}
+});
+  }
+else{
   resp.render("addfood",{success:""});
 }
-
+});
+}
 });
 
 
