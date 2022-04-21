@@ -29,7 +29,7 @@ body {
 }
 .big-heading{
   font-family: "Montserrat-Black";
-  font-size: 5rem;
+  font-size: 5.5rem;
   line-height: 1.5;
 
 }
@@ -71,7 +71,7 @@ padding-bottom: 2%;
 .icon {
     color:  #004c3f ;
 
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .icon:hover {
@@ -79,7 +79,7 @@ color: #008060 ;
 }
 
 .navbar {
-  padding: 0 0 4.5rem;
+  padding: 0 0 6.5rem;
 }
 
 .navbar-brand {
