@@ -14,7 +14,7 @@ p {
 body {
   text-align : center;
   font-style: "Montserrat";
-  font-size: 2em;
+  font-size: 1em;
 }
 
 #title {
@@ -29,7 +29,7 @@ body {
 }
 .big-heading{
   font-family: "Montserrat-Black";
-  font-size: 3em;
+  font-size: 2em;
   line-height: 1.5;
 
 }
@@ -84,7 +84,7 @@ color: #008060 ;
 
 .navbar-brand {
   font-family: 'Ubuntu';
-  font-size: 3em;
+  font-size: 2em;
   font-weight: bold
 }
 
