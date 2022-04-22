@@ -101,7 +101,7 @@ app.get("/login", function(req, res){
 app.get("/profile", function(req, res){
   if (req.isAuthenticated()){
     let date_ob = new Date();
-    date_ob = new Date(date_ob.getTime() - date_ob.getTimezoneOffset() * 60000);
+
       let date = ("0" + date_ob.getDate()).slice(-2);
       let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
       let year = date_ob.getFullYear();
@@ -167,7 +167,7 @@ app.get("/exercise", function(req, res){
   if (req.isAuthenticated())
   {
     let date_ob = new Date();
-    date_ob = new Date(date_ob.getTime() - date_ob.getTimezoneOffset() * 60000);
+
       let date = ("0" + date_ob.getDate()).slice(-2);
       let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
       let year = date_ob.getFullYear();
@@ -572,7 +572,7 @@ const Dailydata = new mongoose.model("Dailydata", dailySchema);
 app.post("/addfood",function(req,resp){
 
   let date_ob = new Date();
-  date_ob = new Date(date_ob.getTime() - date_ob.getTimezoneOffset() * 60000);
+
   let date = ("0" + date_ob.getDate()).slice(-2);
   let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
   let year = date_ob.getFullYear();
@@ -716,7 +716,7 @@ var da= await d;
 
 
        let date_ob = new Date();
-       date_ob = new Date(date_ob.getTime() - date_ob.getTimezoneOffset() * 60000);
+
   let date = ("0" + date_ob.getDate()).slice(-2);
   let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
   let year = date_ob.getFullYear();
@@ -842,7 +842,7 @@ else{
 
 
     let date_ob = new Date();
-    date_ob = new Date(date_ob.getTime() - date_ob.getTimezoneOffset() * 60000);
+
 let date = ("0" + date_ob.getDate()).slice(-2);
 let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
 let year = date_ob.getFullYear();
@@ -971,7 +971,7 @@ yog=dur;
 else if(exer==5)
 oth=dur;
 let date_ob = new Date();
-date_ob = new Date(date_ob.getTime() - date_ob.getTimezoneOffset() * 60000);
+
 let date = ("0" + date_ob.getDate()).slice(-2);
 let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
 let year = date_ob.getFullYear();
