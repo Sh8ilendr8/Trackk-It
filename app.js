@@ -9,17 +9,13 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const https=require("https");
 
-
 const app = express();
 
 app.use(express.static("public"));
-
 app.set('view engine', 'ejs');
-
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
 
 app.use(session({
   secret:process.env.SECRET,
@@ -27,11 +23,8 @@ app.use(session({
   saveUninitialized: false
 }));
 
-
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 mongoose.connect("mongodb+srv://admin-track:TrackkIt@trackkit.wtvak.mongodb.net/TrackkItDB",
 {useNewUrlParser: true
@@ -40,9 +33,6 @@ mongoose.connect("mongodb+srv://admin-track:TrackkIt@trackkit.wtvak.mongodb.net/
 }).catch((err)=>{
   console.log("no connection");
 });
-
-
-
 
 const userSchema = new mongoose.Schema ({
   email: String,
@@ -67,35 +57,28 @@ passport.deserializeUser(function(id, done) {
 
 
 
-
-
-
 app.get("/", function(req, res){
-  res.render("index");
+      res.render("index");
 });
 
 app.get("/about", function(req, res){
-  res.render("about");
+      res.render("about");
 });
 
 app.get("/contact", function(req, res){
-  res.render("contact",{success:""});
+      res.render("contact",{success:""});
 });
 
 app.get("/bmi", function(req, res){
-  res.render("bmi");
+      res.render("bmi");
 });
 
 app.get("/register", function(req, res){
-  res.render("register",{success:""});
+      res.render("register",{success:""});
 });
 
-// app.get("/information", function(req, res){
-//   res.render("information",{success:""});
-// });
-
 app.get("/login", function(req, res){
-  res.render("login");
+      res.render("login");
 });
 
 app.get("/profile", function(req, res){
@@ -161,7 +144,6 @@ app.get("/addfood", function(req, res){
   }
 });
 
-
 app.get("/exercise", function(req, res){
 
   if (req.isAuthenticated())
@@ -173,7 +155,6 @@ app.get("/exercise", function(req, res){
       let year = date_ob.getFullYear();
       var day= date+"-"+month+"-"+year;
 
-      console.log(date_ob.getTime());
       Exercisedata.find({name:req.user.username, date: day},function(err,exercises)
       {
         if(err){
@@ -192,14 +173,9 @@ app.get("/exercise", function(req, res){
   }
 });
 
-
 app.get("/track", function(req, res){
     if (req.isAuthenticated()){
-
-
-
-
-     Dailydata.find({name:req.user.username},function(err,foods){
+       Dailydata.find({name:req.user.username},function(err,foods){
           if(err){
             console.log(err);
           }
@@ -274,7 +250,6 @@ app.get("/track", function(req, res){
         res.redirect("/login");
     }
 });
-
 
 app.get("/tracke", function(req, res){
   if (req.isAuthenticated()){
@@ -354,9 +329,6 @@ app.get("/tracke", function(req, res){
   }
 });
 
-
-
-
 app.get("/trackn", function(req, res){
     if (req.isAuthenticated()){
         Fooddata.find({name:req.user.username},function(err,foods){
@@ -435,715 +407,584 @@ app.get("/trackn", function(req, res){
     }
   });
 
-
 app.get("/logout", function(req, res){
       req.logout();
       res.redirect("/");
 });
 
 
-const informationSchema = new mongoose.Schema ({
-  email: String,
-  name: String,
-  height: Number,
-  weight: Number,
-  bmi:Number,
-  bmr:Number,
-  idealcal:Number
-});
 
+
+const informationSchema = new mongoose.Schema ({
+      email: String,
+      name: String,
+      height: Number,
+      weight: Number,
+      bmi:Number,
+      bmr:Number,
+      idealcal:Number
+});
 const Information = new mongoose.model("Information", informationSchema);
 
+const foodSchema = new mongoose.Schema ({
+      name: String,
+      date: String,
+      calorie: Number,
+      protien: Number,
+      carbohydrate: Number,
+      fat: Number,
+      cholestrol: Number
+});
+const Fooddata = new mongoose.model("Fooddata", foodSchema);
 
+const perfoodSchema = new mongoose.Schema ({
+      name: String,
+      calorie: Number,
+      protien: Number,
+      carbohydrate: Number,
+      fat: Number,
+      cholestrol: Number
+});
+const Perfooddata = new mongoose.model("Perfooddata", perfoodSchema);
+
+const dailySchema = new mongoose.Schema ({
+      name: String,
+      date: String,
+      calorie: Number,
+      protien: Number,
+      carbohydrate: Number,
+      fat: Number,
+      cholestrol: Number
+});
+const Dailydata = new mongoose.model("Dailydata", dailySchema);
+
+const exerciseSchema = new mongoose.Schema ({
+      name: String,
+      date: String,
+      walking: Number,
+      running: Number,
+      cycling: Number,
+      yoga: Number,
+      other: Number
+});
+const Exercisedata = new mongoose.model("Exercisedata", exerciseSchema);
+
+const contactSchema = new mongoose.Schema ({
+      name: {
+            type: String,
+            required: true
+      },
+      email: {
+            type: String,
+            lowercase: true,
+            required: true
+      },
+      message: {
+            type: String,
+            required: true
+      },
+});
+const Contact = new mongoose.model("Contact", contactSchema);
 
 
 
 app.post("/register", function(req, res){
 
-  var h= req.body.height;
-  var w= req.body.weight;
-  var g=req.body.gender;
-  var f=req.body.fat;
-  var a=req.body.activity;
-  var go= req.body.goal;
-  var bm=( w/((h*h)/10000)).toFixed(2);
-  var mr=Math.round( w*(parseFloat(g))*24*(parseFloat(f))*(parseFloat(a)));
-  var ic=0;
+      var h= req.body.height;
+      var w= req.body.weight;
+      var g=req.body.gender;
+      var f=req.body.fat;
+      var a=req.body.activity;
+      var go= req.body.goal;
+      var bm=( w/((h*h)/10000)).toFixed(2);
+      var mr=Math.round( w*(parseFloat(g))*24*(parseFloat(f))*(parseFloat(a)));
+      var ic=0;
 
-  if(go==="1"){
-   ic=mr- 400;}
-  else if(go==="2"){
-   ic=mr+400;}
-  else{
-   ic=mr;}
-   const newInformation= new Information({
+      if(go==="1"){
+          ic=mr- 400;}
+      else if(go==="2"){
+          ic=mr+400;}
+      else{
+          ic=mr;}
 
-     email: req.body.username,
-     name: req.body.name,
-     height: h,
-     weight: w,
-     bmi: bm,
-     bmr: mr,
-     idealcal: ic
-  });
-
-  newInformation.save();
-
-  User.register({username:req.body.username}, req.body.password, function(err, user){
-    if (err) {
-      res.render("register",{success:"Sorry!!! User email id  is already registered"} );
-    } else {
-      passport.authenticate("local")(req, res, function(){
-        // req.logout();
-        res.redirect("/profile");
+      const newInformation= new Information({
+             email: req.body.username,
+             name: req.body.name,
+             height: h,
+             weight: w,
+             bmi: bm,
+             bmr: mr,
+             idealcal: ic
       });
-    }
-  });
+        newInformation.save();
 
+      User.register({username:req.body.username}, req.body.password, function(err, user){
+            if (err) {
+                  res.render("register",{success:"Sorry!!! User email id  is already registered"} );
+            }
+            else {
+                  passport.authenticate("local")(req, res, function(){
+                        res.redirect("/profile");
+                  });
+              }
+      });
 });
 
 
 app.post("/login", function(req, res){
 
-    const user = new User({
-      username: req.body.username,
-      password: req.body.password
-    });
+        const user = new User({
+              username: req.body.username,
+              password: req.body.password
+        });
 
-  req.login(user, function(err){
-    if (err) {
-    res.render("login",{success : "Error !!!  Please fill all the credentials."});
-    } else {
-      passport.authenticate("local")(req, res, function(){
-        // Information.find({email:req.body.username},function(err,data){
-        //   if(err)
-        //   {
-        //     console.log(err);
-        //   }
-        //   if(data.length==0)
-        //   {
-        //     res.render("information",{success:"Please fill the form before login"});
-        //   }
-        //   else{
-
-                 res.redirect("/profile");
-
-
-  });
-}
+        req.login(user, function(err){
+              if (err) {
+                    res.render("login",{success : "Error !!!  Please fill all the credentials."});
+              }
+              else {
+                    passport.authenticate("local")(req, res, function(){
+                            res.redirect("/profile");
+                     });
+               }
+      });
 });
-});
-
-const foodSchema = new mongoose.Schema ({
-  name: String,
-  date: String,
-  calorie: Number,
-  protien: Number,
-  carbohydrate: Number,
-  fat: Number,
-  cholestrol: Number
-});
-const Fooddata = new mongoose.model("Fooddata", foodSchema);
-
-const perfoodSchema = new mongoose.Schema ({
-  name: String,
-  calorie: Number,
-  protien: Number,
-  carbohydrate: Number,
-  fat: Number,
-  cholestrol: Number
-});
-const Perfooddata = new mongoose.model("Perfooddata", perfoodSchema);
-
-
-const dailySchema = new mongoose.Schema ({
-  name: String,
-  date: String,
-  calorie: Number,
-  protien: Number,
-  carbohydrate: Number,
-  fat: Number,
-  cholestrol: Number
-});
-const Dailydata = new mongoose.model("Dailydata", dailySchema);
-
 
 
 app.post("/addfood",function(req,resp){
 
-  let date_ob = new Date();
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let day= date+"-"+month+"-"+year;
 
-  let date = ("0" + date_ob.getDate()).slice(-2);
-  let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-  let year = date_ob.getFullYear();
-  let day= date+"-"+month+"-"+year;
+        const newperfood= new Perfooddata({
+                name: req.body.foodname,
+                calorie: req.body.calories,
+                protien:req.body.protein,
+                carbohydrate:req.body.carbohydrate,
+                fat: req.body.fat,
+                cholestrol: req.body.cholestrol
+        });
+          newperfood.save();
 
+        Fooddata.find({name:req.user.username, date: day},function(err,foods)
+        {
+              if(err){
+                  console.log(err);}
 
-  const newperfood= new Perfooddata({
-    name: req.body.foodname,
-    calorie: req.body.calories,
-    protien:req.body.protein,
-    carbohydrate:req.body.carbohydrate,
-    fat: req.body.fat,
-    cholestrol: req.body.cholestrol
-  });
+              if(foods.length==0)
+              {
+                  const newdaily= new Dailydata({
+                          name: req.user.username,
+                          date:day,
+                          calorie: req.body.calories,
+                          protien:req.body.protein,
+                          carbohydrate:req.body.carbohydrate,
+                          fat: req.body.fat,
+                          cholestrol: req.body.cholestrol
+                    });
+                    newdaily.save();
 
-    newperfood.save();
+                   const newfood= new Fooddata({
+                          name: req.user.username,
+                          date:day,
+                          calorie: req.body.calories,
+                          protien:req.body.protein,
+                          carbohydrate:req.body.carbohydrate,
+                          fat: req.body.fat,
+                          cholestrol: req.body.cholestrol
+                   });
+                   newfood.save(function(err){
+                          if(err){
+                                resp.render("addfood",{success : "Error !!!  Please fill all the credentials."});
+                          }else {
+                                resp.render("addfood",{success : "Thank you !!!  Your personalized meal is saved"});
+                          }
+                  });
+              }
+              else
+              {
+                    var c = parseFloat(foods[0].calorie);
+                    c= c+   parseFloat(req.body.calories);
+                    var p= parseFloat(foods[0].protien);
+                    p= p+ parseFloat(req.body.protein);
+                    var ch= parseFloat(foods[0].cholestrol);
+                    ch= ch+ parseFloat(req.body.cholestrol);
+                    var ca= parseFloat(foods[0].carbohydrate);
+                    ca= ca+ parseFloat(req.body.carbohydrate);
+                    var f= parseFloat(foods[0].fat);
+                    f= f+ parseFloat(req.body.fat);
 
+                    Fooddata.updateOne({name:req.user.username, date: day},{$set:{calorie:c, protien:p, cholestrol:ch, carbohydrate: ca, fat:f}},function(err){
+                          if(err){
+                              console.log(err);}
+                    });
 
+                    Dailydata.find({name:req.user.username, date: day},function(err,daily){
+                            var l =daily.length;
+                            var v =parseFloat(daily[l-1].calorie);
+                            v=v+ parseFloat(req.body.calories);
+                            var w =parseFloat(daily[l-1].protien);
+                            w=w+ parseFloat(req.body.protein);
+                            var x =parseFloat(daily[l-1].carbohydrate);
+                            x=x+ parseFloat(req.body.carbohydrate);
+                            var y =parseFloat(daily[l-1].fat);
+                            y=y+ parseFloat(req.body.fat);
+                            var z =parseFloat(daily[l-1].cholestrol);
+                            z=z+ parseFloat(req.body.cholestrol);
 
-  Fooddata.find({name:req.user.username, date: day},function(err,foods)
-  {
-    if(err){
-    console.log(err);}
-
-    if(foods.length==0)
-    {
-
-      const newdaily= new Dailydata({
-        name: req.user.username,
-        date:day,
-        calorie: req.body.calories,
-        protien:req.body.protein,
-        carbohydrate:req.body.carbohydrate,
-        fat: req.body.fat,
-        cholestrol: req.body.cholestrol
+                            const newdaily= new Dailydata({
+                                  name: req.user.username,
+                                  date:day,
+                                  calorie: v,
+                                  protien: w,
+                                  carbohydrate:x,
+                                  fat: y,
+                                  cholestrol: z
+                            });
+                              newdaily.save();
+                    });
+                    resp.render("addfood",{success : "Thank you !!!  Your personalized meal is saved. Now onwards you can simply write your personilized food name along with serving size (how many multiple of serving you had)"});
+              }
       });
-
-        newdaily.save();
-
-      const newfood= new Fooddata({
-        name: req.user.username,
-        date:day,
-        calorie: req.body.calories,
-        protien:req.body.protein,
-        carbohydrate:req.body.carbohydrate,
-        fat: req.body.fat,
-        cholestrol: req.body.cholestrol
-      });
-      newfood.save(function(err){
-        if(err){
-          resp.render("addfood",{success : "Error !!!  Please fill all the credentials."});
-        }else {
-          resp.render("addfood",{success : "Thank you !!!  Your personalized meal is saved"});
-        }
-      });
-    }
-  else
-  {
-    var c = parseFloat(foods[0].calorie);
-    c= c+   parseFloat(req.body.calories);
-
-    var p= parseFloat(foods[0].protien);
-    p= p+ parseFloat(req.body.protein);
-
-    var ch= parseFloat(foods[0].cholestrol);
-    ch= ch+ parseFloat(req.body.cholestrol);
-
-    var ca= parseFloat(foods[0].carbohydrate);
-    ca= ca+ parseFloat(req.body.carbohydrate);
-
-    var f= parseFloat(foods[0].fat);
-    f= f+ parseFloat(req.body.fat);
-
-
-     Fooddata.updateOne({name:req.user.username, date: day},{$set:{calorie:c, protien:p, cholestrol:ch, carbohydrate: ca, fat:f}},function(err){
-      if(err){
-      console.log(err);}
-    });
-
-    Dailydata.find({name:req.user.username, date: day},function(err,daily){
-      var l =daily.length;
-      var v =parseFloat(daily[l-1].calorie);
-      v=v+ parseFloat(req.body.calories);
-      var w =parseFloat(daily[l-1].protien);
-      w=w+ parseFloat(req.body.protein);
-      var x =parseFloat(daily[l-1].carbohydrate);
-      x=x+ parseFloat(req.body.carbohydrate);
-      var y =parseFloat(daily[l-1].fat);
-      y=y+ parseFloat(req.body.fat);
-      var z =parseFloat(daily[l-1].cholestrol);
-      z=z+ parseFloat(req.body.cholestrol);
-
-
-
-
-      const newdaily= new Dailydata({
-      name: req.user.username,
-      date:day,
-      calorie: v,
-      protien: w,
-      carbohydrate:x,
-      fat: y,
-      cholestrol: z
-    });
-
-      newdaily.save();
-    });
-     resp.render("addfood",{success : "Thank you !!!  Your personalized meal is saved. Now onwards you can simply write your personilized food name along with serving size (how many multiple of serving you had)"});
-}
 });
-});
+
 
 app.post("/food",function(req,resp){
+        const query=req.body.username;
+        const ser=req.body.serving;
+        https.get('https://api.calorieninjas.com/v1/nutrition?query='+ser+" " +query, {
+          "headers":{
+              'X-Api-Key':process.env.key
+           }
+        },  async (res)=>
+               {
+                      res.on('data', async  (d) => {
+                      var da= await d;
+                      var dy =JSON.parse(da);
 
+                      if(dy.items.length!=0)
+                      {
+                           var v=0, w=0, x=0, y=0, z=0;
+                           for(var i=0; i<dy.items.length; i++)
+                           {
+                                 v= v+ dy.items[i].calories;
+                                 w= w+ dy.items[i].protein_g;
+                                 x=x+ dy.items[i].carbohydrates_total_g;
+                                 y=y+ dy.items[i].fat_total_g;
+                                 z=z+ dy.items[i].cholesterol_mg;
+                           }
+                          let date_ob = new Date();
+                          let date = ("0" + date_ob.getDate()).slice(-2);
+                          let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+                          let year = date_ob.getFullYear();
+                          let day= date+"-"+month+"-"+year;
+                          Fooddata.find({name:req.user.username, date: day},function(err,foods)
+                          {
+                                if(err){
+                                    console.log(err);}
+                                if(foods.length==0)
+                                {
+                                      const newfood= new Fooddata({
+                                              date:day,
+                                              name:req.user.username,
+                                              calorie: v,
+                                              protien:w,
+                                              carbohydrate:x,
+                                              fat: y,
+                                              cholestrol: z
+                                      });
+                                      newfood.save();
 
-const query=req.body.username;
-const ser=req.body.serving;
-https.get('https://api.calorieninjas.com/v1/nutrition?query='+ser+" " +query, {
-  "headers":{
-      'X-Api-Key':process.env.key
-  }
-},  async (res)=> {
+                                      const newdaily= new Dailydata({
+                                              name: req.user.username,
+                                              date:day,
+                                              calorie: v,
+                                              protien:w,
+                                              carbohydrate:x,
+                                              fat: y,
+                                              cholestrol: z
+                                      });
+                                      newdaily.save();
+                                      resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
+                                }
+                                else
+                                {
+                                      var c = parseFloat(foods[0].calorie);
+                                      c= c+   parseFloat(v);
+                                      var p= parseFloat(foods[0].protien);
+                                      p= p+ parseFloat(w);
+                                      var ch= parseFloat(foods[0].cholestrol);
+                                      ch= ch+ parseFloat(z);
+                                      var ca= parseFloat(foods[0].carbohydrate);
+                                      ca= ca+ parseFloat(x);
+                                      var f= parseFloat(foods[0].fat);
+                                      f= f+ parseFloat(y);
 
+                                      Fooddata.updateOne({name:req.user.username, date: day},{$set:{calorie:c, protien:p, cholestrol:ch, carbohydrate: ca, fat:f}},function(err){
+                                            if(err){
+                                                console.log(err);}
+                                      });
 
-  res.on('data', async  (d) => {
-var da= await d;
- var dy =JSON.parse(da);
+                                      Dailydata.find({name:req.user.username, date: day},function(err,daily){
+                                            var l =daily.length;
+                                            var f =(daily[l-1].calorie);
+                                            f=f+ v;
+                                            var g =(daily[l-1].protien);
+                                            g=g+ w;
+                                            var h =(daily[l-1].carbohydrate);
+                                            h=h+ x;
+                                            var i =(daily[l-1].fat);
+                                            i=i+ y;
+                                            var j =(daily[l-1].cholestrol);
+                                            j=j+ z;
 
-  if(dy.items.length!=0)
-  {
-       var v=0, w=0, x=0, y=0, z=0;
-       for(var i=0; i<dy.items.length; i++)
-       {
-         v= v+ dy.items[i].calories;
-         w= w+ dy.items[i].protein_g;
-         x=x+ dy.items[i].carbohydrates_total_g;
-         y=y+ dy.items[i].fat_total_g;
-         z=z+ dy.items[i].cholesterol_mg;
-       }
+                                            const newdaily= new Dailydata({
+                                                    name: req.user.username,
+                                                    date:day,
+                                                    calorie: f,
+                                                    protien:g,
+                                                    carbohydrate:h,
+                                                    fat: i,
+                                                    cholestrol:j
+                                            });
+                                              newdaily.save();
+                                       });
+                                      resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
+                               }
+                          });
+                    }
+                    else{
+                              Perfooddata.find({name:query},function(err,perfoods)
+                              {
+                                      if(err){
+                                            console.log(err);}
+                                      if(perfoods.length!=0)
+                                      {
+                                              var v=0, w=0, x=0, y=0, z=0;
+                                              if(isNaN(parseFloat(ser)))
+                                              {
+                                                     v= parseFloat(perfoods[0].calorie);
+                                                     w= parseFloat(perfoods[0].protien);
+                                                     x= parseFloat(perfoods[0].carbohydrate);
+                                                     y= parseFloat(perfoods[0].fat);
+                                                     z= parseFloat(perfoods[0].cholestrol);
+                                              }
+                                              else
+                                              {
+                                                     v= parseFloat(perfoods[0].calorie) * parseFloat(ser);
+                                                     w= parseFloat(perfoods[0].protien) * parseFloat(ser);
+                                                     x= parseFloat(perfoods[0].carbohydrate) * parseFloat(ser);
+                                                     y= parseFloat(perfoods[0].fat) * parseFloat(ser);
+                                                     z= parseFloat(perfoods[0].cholestrol) * parseFloat(ser);
+                                              }
+                                              let date_ob = new Date();
+                                              let date = ("0" + date_ob.getDate()).slice(-2);
+                                              let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+                                              let year = date_ob.getFullYear();
+                                              let day= date+"-"+month+"-"+year;
+                                              Fooddata.find({name:req.user.username, date: day},function(err,foods)
+                                              {
+                                                       if(err){
+                                                            console.log(err);}
+                                                       if(foods.length==0)
+                                                       {
+                                                           const newfood= new Fooddata({
+                                                                 date:day,
+                                                                 name:req.user.username,
+                                                                 calorie: v,
+                                                                 protien:w,
+                                                                 carbohydrate:x,
+                                                                 fat: y,
+                                                                 cholestrol: z
+                                                           });
+                                                           newfood.save();
 
+                                                           const newdaily= new Dailydata({
+                                                                 name: req.user.username,
+                                                                 date:day,
+                                                                 calorie: v,
+                                                                 protien:w,
+                                                                 carbohydrate:x,
+                                                                 fat: y,
+                                                                 cholestrol: z
+                                                           });
+                                                           newdaily.save();
+                                                           resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
+                                                      }
+                                                      else
+                                                      {
+                                                           var c = parseFloat(foods[0].calorie);
+                                                           c= c+   parseFloat(v);
+                                                           var p= parseFloat(foods[0].protien);
+                                                           p= p+ parseFloat(w);
+                                                           var ch= parseFloat(foods[0].cholestrol);
+                                                           ch= ch+ parseFloat(z);
+                                                           var ca= parseFloat(foods[0].carbohydrate);
+                                                           ca= ca+ parseFloat(x);
+                                                           var f= parseFloat(foods[0].fat);
+                                                           f= f+ parseFloat(y);
 
+                                                           Fooddata.updateOne({name:req.user.username, date: day},{$set:{calorie:c, protien:p, cholestrol:ch, carbohydrate: ca, fat:f}},function(err){
+                                                                if(err){
+                                                                  console.log(err);}
+                                                           });
 
-       let date_ob = new Date();
-
-  let date = ("0" + date_ob.getDate()).slice(-2);
-  let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-  let year = date_ob.getFullYear();
-  let day= date+"-"+month+"-"+year;
-  Fooddata.find({name:req.user.username, date: day},function(err,foods)
-  {
-    if(err){
-    console.log(err);}
-    if(foods.length==0)
-    {
-    const newfood= new Fooddata({
-    date:day,
-    name:req.user.username,
-    calorie: v,
-    protien:w,
-    carbohydrate:x,
-    fat: y,
-    cholestrol: z
-    });
-    newfood.save();
-
-    const newdaily= new Dailydata({
-      name: req.user.username,
-      date:day,
-      calorie: v,
-      protien:w,
-      carbohydrate:x,
-      fat: y,
-      cholestrol: z
-    });
-
-      newdaily.save();
-
-    resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
-  }
-  else
-  {
-    var c = parseFloat(foods[0].calorie);
-    c= c+   parseFloat(v);
-
-    var p= parseFloat(foods[0].protien);
-    p= p+ parseFloat(w);
-
-    var ch= parseFloat(foods[0].cholestrol);
-    ch= ch+ parseFloat(z);
-
-    var ca= parseFloat(foods[0].carbohydrate);
-    ca= ca+ parseFloat(x);
-
-    var f= parseFloat(foods[0].fat);
-    f= f+ parseFloat(y);
-
-     Fooddata.updateOne({name:req.user.username, date: day},{$set:{calorie:c, protien:p, cholestrol:ch, carbohydrate: ca, fat:f}},function(err){
-      if(err){
-      console.log(err);}
-    });
-
-    Dailydata.find({name:req.user.username, date: day},function(err,daily){
-      var l =daily.length;
-      var f =(daily[l-1].calorie);
-      f=f+ v;
-      var g =(daily[l-1].protien);
-      g=g+ w;
-      var h =(daily[l-1].carbohydrate);
-      h=h+ x;
-      var i =(daily[l-1].fat);
-      i=i+ y;
-      var j =(daily[l-1].cholestrol);
-      j=j+ z;
-
-
-
-    const newdaily= new Dailydata({
-      name: req.user.username,
-      date:day,
-      calorie: f,
-      protien:g,
-      carbohydrate:h,
-      fat: i,
-      cholestrol:j
-    });
-
-      newdaily.save();
-    });
-
-   resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
-}
+                                                           Dailydata.find({name:req.user.username, date: day},function(err,daily){
+                                                                   var l =daily.length;
+                                                                   var f =(daily[l-1].calorie);
+                                                                   f=f+ v;
+                                                                   var g =(daily[l-1].protien);
+                                                                   g=g+ w;
+                                                                   var h =(daily[l-1].carbohydrate);
+                                                                   h=h+ x;
+                                                                   var i =(daily[l-1].fat);
+                                                                   i=i+ y;
+                                                                   var j =(daily[l-1].cholestrol);
+                                                                   j=j+ z;
+                                                                   const newdaily= new Dailydata({
+                                                                           name: req.user.username,
+                                                                           date:day,
+                                                                           calorie: f,
+                                                                           protien:g,
+                                                                           carbohydrate:h,
+                                                                           fat: i,
+                                                                           cholestrol:j
+                                                                  });
+                                                                   newdaily.save();
+                                                           });
+                                                           resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
+                                                      }
+                                            });
+                                  }
+                                  else{
+                                        resp.render("addfood",{success:""});
+                                  }
+                            });
+                      }
+                });
+            }).on('error', (e) => {
+                  console.error(e);
+              });
 });
-}
-else{
-  Perfooddata.find({name:query},function(err,perfoods)
-  {
-    if(err){
-    console.log(err);}
-    if(perfoods.length!=0)
-    {
-      var v=0, w=0, x=0, y=0, z=0;
-    if(isNaN(parseFloat(ser)))
-    {
-      v= parseFloat(perfoods[0].calorie);
-       w= parseFloat(perfoods[0].protien);
-       x= parseFloat(perfoods[0].carbohydrate);
-       y= parseFloat(perfoods[0].fat);
-       z= parseFloat(perfoods[0].cholestrol);
-    }
-    else
-    {
-     v= parseFloat(perfoods[0].calorie) * parseFloat(ser);
-     w= parseFloat(perfoods[0].protien) * parseFloat(ser);
-     x= parseFloat(perfoods[0].carbohydrate) * parseFloat(ser);
-     y= parseFloat(perfoods[0].fat) * parseFloat(ser);
-     z= parseFloat(perfoods[0].cholestrol) * parseFloat(ser);
-    }
-    // for(var i=0; i<dy.items.length; i++)
-    // {
-    //   v= v+ dy.items[i].calories;
-    //   w= w+ dy.items[i].protein_g;
-    //   x=x+ dy.items[i].carbohydrates_total_g;
-    //   y=y+ dy.items[i].fat_total_g;
-    //   z=z+ dy.items[i].cholesterol_mg;
-    // }
-
-
-
-    let date_ob = new Date();
-
-let date = ("0" + date_ob.getDate()).slice(-2);
-let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-let year = date_ob.getFullYear();
-let day= date+"-"+month+"-"+year;
-Fooddata.find({name:req.user.username, date: day},function(err,foods)
-{
- if(err){
- console.log(err);}
- if(foods.length==0)
- {
- const newfood= new Fooddata({
- date:day,
- name:req.user.username,
- calorie: v,
- protien:w,
- carbohydrate:x,
- fat: y,
- cholestrol: z
- });
- newfood.save();
-
- const newdaily= new Dailydata({
-   name: req.user.username,
-   date:day,
-   calorie: v,
-   protien:w,
-   carbohydrate:x,
-   fat: y,
-   cholestrol: z
- });
-
-   newdaily.save();
-
- resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
-}
-else
-{
- var c = parseFloat(foods[0].calorie);
- c= c+   parseFloat(v);
-
- var p= parseFloat(foods[0].protien);
- p= p+ parseFloat(w);
-
- var ch= parseFloat(foods[0].cholestrol);
- ch= ch+ parseFloat(z);
-
- var ca= parseFloat(foods[0].carbohydrate);
- ca= ca+ parseFloat(x);
-
- var f= parseFloat(foods[0].fat);
- f= f+ parseFloat(y);
-
-  Fooddata.updateOne({name:req.user.username, date: day},{$set:{calorie:c, protien:p, cholestrol:ch, carbohydrate: ca, fat:f}},function(err){
-   if(err){
-   console.log(err);}
- });
-
- Dailydata.find({name:req.user.username, date: day},function(err,daily){
-   var l =daily.length;
-   var f =(daily[l-1].calorie);
-   f=f+ v;
-   var g =(daily[l-1].protien);
-   g=g+ w;
-   var h =(daily[l-1].carbohydrate);
-   h=h+ x;
-   var i =(daily[l-1].fat);
-   i=i+ y;
-   var j =(daily[l-1].cholestrol);
-   j=j+ z;
-
-
-
- const newdaily= new Dailydata({
-   name: req.user.username,
-   date:day,
-   calorie: f,
-   protien:g,
-   carbohydrate:h,
-   fat: i,
-   cholestrol:j
- });
-
-   newdaily.save();
- });
-
-resp.render("food",{n:query, c:v,p:w,ch:z,f:y, ca:x});
-}
-});
-  }
-else{
-  resp.render("addfood",{success:""});
-}
-});
-}
-});
-
-
-}).on('error', (e) => {
-  console.error(e);
-});
-});
-
-const exerciseSchema = new mongoose.Schema ({
-  name: String,
-  date: String,
-  walking: Number,
-  running: Number,
-  cycling: Number,
-  yoga: Number,
-  other: Number
-});
-const Exercisedata = new mongoose.model("Exercisedata", exerciseSchema);
 
 app.post("/exercise",function(req, res){
-var wal=0, cyc=0, run=0, yog=0, oth=0;
-var exer = req.body.exercise;
-var dur= req.body.time;
-if(exer==1)
-wal=dur;
-else if(exer==2)
-run=dur;
-else if(exer==3)
-cyc=dur;
-else if(exer==4)
-yog=dur;
-else if(exer==5)
-oth=dur;
-let date_ob = new Date();
-
-let date = ("0" + date_ob.getDate()).slice(-2);
-let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-let year = date_ob.getFullYear();
-let day= date+"-"+month+"-"+year;
-Exercisedata.find({name:req.user.username, date: day},function(err,exercises)
-{
-  if(err){
-  console.log(err);}
-  if(exercises.length==0)
-  {
-    const newexercise= new Exercisedata({
-      date:day,
-      name:req.user.username,
-      walking:wal,
-      running:run,
-      cycling: cyc,
-      yoga:yog,
-      other:oth
-      });
-      newexercise.save();
-      res.render("exercise",{w:wal,r:run,c:cyc,y:yog,o:oth});
-  }
- else{
+      var wal=0, cyc=0, run=0, yog=0, oth=0;
+      var exer = req.body.exercise;
+      var dur= req.body.time;
       if(exer==1)
+          wal=dur;
+      else if(exer==2)
+          run=dur;
+      else if(exer==3)
+          cyc=dur;
+      else if(exer==4)
+          yog=dur;
+      else if(exer==5)
+          oth=dur;
+
+      let date_ob = new Date();
+      let date = ("0" + date_ob.getDate()).slice(-2);
+      let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+      let year = date_ob.getFullYear();
+      let day= date+"-"+month+"-"+year;
+
+      Exercisedata.find({name:req.user.username, date: day},function(err,exercises)
       {
-        var w = parseInt(exercises[0].walking);
-         w= w+ parseInt(dur);
-        Exercisedata.updateOne({name:req.user.username, date: day},{$set:{walking: w}},function(err){
-          if(err){
-          console.log(err);}
-        });
-        res.render("exercise",{w:w, r:exercises[0].running, c: exercises[0].cycling, y:exercises[0].yoga, o:exercises[0].other});
-      }
-      if(exer==2)
-      {
-        var r = parseInt(exercises[0].running);
-         r= r+ parseInt(dur);
-        Exercisedata.updateOne({name:req.user.username, date: day},{$set:{running: r}} ,function(err){
-          if(err){
-          console.log(err);}
-        });
-        res.render("exercise",{w:exercises[0].walking, r:r, c: exercises[0].cycling, y:exercises[0].yoga, o:exercises[0].other});
-      }
-      if(exer==3)
-      {
-        var c = parseInt(exercises[0].cycling);
-         c= c+ parseInt(dur);
-        Exercisedata.updateOne({name:req.user.username, date: day},{$set:{cycling: c}} ,function(err){
-          if(err){
-          console.log(err);}
-        });
-        res.render("exercise",{w:exercises[0].walking, r:exercises[0].running, c: c, y:exercises[0].yoga, o:exercises[0].other});
-      }
-      if(exer==4)
-      {
-        var y = parseInt(exercises[0].yoga);
-         y= y+ parseInt(dur);
-        Exercisedata.updateOne({name:req.user.username, date: day},{$set:{yoga: y}} ,function(err){
-          if(err){
-          console.log(err);}
-        });
-        res.render("exercise",{w:exercises[0].walking, r:exercises[0].running, c: exercises[0].cycling, y:y, o:exercises[0].other});
-      }
-      if(exer==5)
-      {
-        var o = parseInt(exercises[0].other);
-         o= o+ parseInt(dur);
-        Exercisedata.updateOne({name:req.user.username, date: day},{$set:{other: o}} ,function(err){
-          if(err){
-          console.log(err);}
-        });
-       res.render("exercise",{w:exercises[0].walking, r:exercises[0].running, c: exercises[0].cycling, y:exercises[0].yoga, o:o});
-  }
-}
+              if(err){
+                    console.log(err);}
+              if(exercises.length==0)
+              {
+                    const newexercise= new Exercisedata({
+                          date:day,
+                          name:req.user.username,
+                          walking:wal,
+                          running:run,
+                          cycling: cyc,
+                          yoga:yog,
+                          other:oth
+                      });
+                      newexercise.save();
+                      res.render("exercise",{w:wal,r:run,c:cyc,y:yog,o:oth});
+              }
+             else{
+                    if(exer==1)
+                    {
+                          var w = parseInt(exercises[0].walking);
+                          w= w+ parseInt(dur);
+                          Exercisedata.updateOne({name:req.user.username, date: day},{$set:{walking: w}},function(err){
+                            if(err){
+                                console.log(err);}
+                          });
+                          res.render("exercise",{w:w, r:exercises[0].running, c: exercises[0].cycling, y:exercises[0].yoga, o:exercises[0].other});
+                    }
+                    if(exer==2)
+                    {
+                          var r = parseInt(exercises[0].running);
+                          r= r+ parseInt(dur);
+                          Exercisedata.updateOne({name:req.user.username, date: day},{$set:{running: r}} ,function(err){
+                            if(err){
+                                console.log(err);}
+                          });
+                          res.render("exercise",{w:exercises[0].walking, r:r, c: exercises[0].cycling, y:exercises[0].yoga, o:exercises[0].other});
+                    }
+                    if(exer==3)
+                    {
+                          var c = parseInt(exercises[0].cycling);
+                          c= c+ parseInt(dur);
+                          Exercisedata.updateOne({name:req.user.username, date: day},{$set:{cycling: c}} ,function(err){
+                            if(err){
+                                console.log(err);}
+                          });
+                          res.render("exercise",{w:exercises[0].walking, r:exercises[0].running, c: c, y:exercises[0].yoga, o:exercises[0].other});
+                    }
+                    if(exer==4)
+                    {
+                          var y = parseInt(exercises[0].yoga);
+                          y= y+ parseInt(dur);
+                          Exercisedata.updateOne({name:req.user.username, date: day},{$set:{yoga: y}} ,function(err){
+                            if(err){
+                                console.log(err);}
+                          });
+                          res.render("exercise",{w:exercises[0].walking, r:exercises[0].running, c: exercises[0].cycling, y:y, o:exercises[0].other});
+                    }
+                    if(exer==5)
+                    {
+                          var o = parseInt(exercises[0].other);
+                          o= o+ parseInt(dur);
+                          Exercisedata.updateOne({name:req.user.username, date: day},{$set:{other: o}} ,function(err){
+                            if(err){
+                                  console.log(err);}
+                          });
+                         res.render("exercise",{w:exercises[0].walking, r:exercises[0].running, c: exercises[0].cycling, y:exercises[0].yoga, o:o});
+                    }
+             }
+      });
 });
 
-});
-
-// const informationSchema = new mongoose.Schema ({
-//   email: String,
-//   name: String,
-//   height: Number,
-//   weight: Number,
-//   bmi:Number,
-//   bmr:Number,
-//   idealcal:Number
-// });
-
-// const Information = new mongoose.model("Information", informationSchema);
-
-app.post("/information", function(req, res){
-
-var h= req.body.height;
-var w= req.body.weight;
-var g=req.body.gender;
-var f=req.body.fat;
-var a=req.body.activity;
-var go= req.body.goal;
-var bm=( w/((h*h)/10000)).toFixed(2);
-var mr=Math.round( w*(parseFloat(g))*24*(parseFloat(f))*(parseFloat(a)));
-var ic=0;
-
-if(go==="1"){
- ic=mr- 400;}
-else if(go==="2"){
- ic=mr+400;}
-else{
- ic=mr;}
- const newInformation= new Information({
-
-   email: req.user.username,
-   name: req.body.name,
-   height: h,
-   weight: w,
-   bmi: bm,
-   bmr: mr,
-   idealcal: ic
-});
-
-newInformation.save(function(err){
-  if(err){
-  console.log(err);}
-  else{
-  res.redirect("/profile");}
-
-});
-
-});
-
-
-
-
-
-
-const contactSchema = new mongoose.Schema ({
-  name: {
-    type: String,
- required: true
-},
-  email: {
-    type: String,
-   lowercase: true,
-   required: true
-  },
-  message: {
-    type: String,
-   required: true
- },
-});
- const Contact = new mongoose.model("Contact", contactSchema);
 app.post("/contact", function(req, res){
-const newContact= new Contact({
-  name: req.body.fname,
-  email: req.body.username,
-  message: req.body.message
+      const newContact= new Contact({
+              name: req.body.fname,
+              email: req.body.username,
+              message: req.body.message
+       });
+      newContact.save(function(err){
+            if(err){
+                  res.render("contact",{success : "Error !!!  Please fill all the credentials."});
+            }else {
+                  res.render("contact",{success :"Thank you !!!  Your message is received. Our team will contact you as soon as possible." });
+            }
+      });
 });
 
-newContact.save(function(err){
-  if(err){
-    res.render("contact",{success : "Error !!!  Please fill all the credentials."});
-  }else {
-    res.render("contact",{success :"Thank you !!!  Your message is received. Our team will contact you as soon as possible." });
-  }
-});
-});
 
 
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 3000;
+      port = 3000;
 }
-
 app.listen(port, function() {
-  console.log("Server started on port 3000.");
+      console.log("Server started on port 3000.");
 });

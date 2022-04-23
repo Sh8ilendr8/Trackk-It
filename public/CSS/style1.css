@@ -41,9 +41,11 @@ background-image: -webkit-linear-gradient(60deg, #004c3f   40%,#008060 60% );
   padding-left:110px;
 }
 
-.copy-right{
-
-  color: white;
+.calculate-button {
+  margin: 5% 3% 5% 0;
+}
+.col{
+  align-self: center;
 }
 .container-fluid {
     background-image: -webkit-linear-gradient(60deg, #004c3f  40%,#008060 60% );
@@ -51,7 +53,6 @@ background-image: -webkit-linear-gradient(60deg, #004c3f   40%,#008060 60% );
   padding-bottom: 12%;
 
 }
-
 .container-profile{
   background-image: -webkit-linear-gradient(60deg, #004c3f  40%,#008060 60% );
 padding : 3% 15%;
@@ -59,13 +60,13 @@ padding-bottom: 2%;
 
 }
 
-.calculate-button {
-  margin: 5% 3% 5% 0;
+.copy-right{
+
+  color: white;
 }
 
-.pricing-column {
-  padding: 3% 2%;
-  text-align: center;
+.feature-box {
+  padding: 5%;
 }
 
 .icon {
@@ -82,6 +83,7 @@ color: #008060 ;
   padding: 0 0 6.5rem;
 }
 
+
 .navbar-brand {
   font-family: 'Ubuntu';
   font-size: 3em;
@@ -91,8 +93,20 @@ color: #008060 ;
 .nav-item {
   padding: 0 18px;
 }
+
 .Navabar{
   padding-left: 20%;
+}
+.pricing-column {
+  padding: 3% 2%;
+  text-align: center;
+}
+
+
+.testimonial-image {
+  width: 10%;
+  border-radius: 500%;
+  margin: 20px;
 }
 
 .title-image {
@@ -101,11 +115,11 @@ color: #008060 ;
   margin-left: 180px;
 }
 
-.testimonial-image {
-  width: 10%;
-  border-radius: 500%;
-  margin: 20px;
+#about{
+  background-color: #ff4c68;
+  ;
 }
+
 #bmi{
   padding-left: 20%;
   padding-top: 8%;
@@ -124,17 +138,8 @@ color: #008060 ;
   background-color: #ef8172;
   padding-bottom: 3%
 }
-#about{
-  background-color: #ff4c68;
-  ;
-}
 
-.feature-box {
-  padding: 5%;
-}
-#navbarSupportedContent{
 
-}
 
 /*TESTIMONIALS*/
 #problem{
@@ -142,6 +147,15 @@ color: #008060 ;
   padding-bottom : 1%;
   padding-left: 10%;
 }
+
+#Signn-up {
+
+  /*padding-top: 100px;*/
+  padding-bottom: 10%;
+  padding-left: 40%;
+  padding-right: 30%;
+}
+
 #testimonials {
 background-image: -webkit-linear-gradient(60deg, #004c3f 40%,#008060 60% );
   color: #fff;
@@ -151,18 +165,10 @@ background-image: -webkit-linear-gradient(60deg, #004c3f 40%,#008060 60% );
 
 
 }
-.col{
-  align-self: center;
-}
+
 /*Sign up section */
-#Signn-up {
 
-  /*padding-top: 100px;*/
-  padding-bottom: 10%;
-  padding-left: 40%;
-  padding-right: 30%;
-
-@media(min-width:30%
+@media(min-width:30%){
   #features {
     text-align: center;
   }

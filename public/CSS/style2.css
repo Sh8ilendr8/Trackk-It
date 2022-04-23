@@ -17,20 +17,36 @@ h1{
     text-align: center;
     color: white;
 }
-.submit-btn{
-    background-color: turquoise;
+
+.bmi_pg{
+    background: tomato;
+    cursor: pointer;
 }
+
+
+.bmi_pg :hover{
+    background: #c70039;
+    color: white;
+}
+
 .bmi-value{
     background-color: #FAFFAF;
     display: grid;
     grid-template-rows: 50% 50%;
 }
+
+
 .status{
     background-color: aquamarine;
     display: grid;
     grid-template-rows: 50% 50%;
 
 }
+.submit-btn{
+    background-color: turquoise;
+}
+
+
 .container > div{
     padding: 10px;
     font-size: 20px;
@@ -60,12 +76,4 @@ input::-webkit-inner-spin-button {
 }
 input[type=number] {
     -moz-appearance: textfield;
-}
-.bmi_pg{
-    background: tomato;
-    cursor: pointer;
-}
-.bmi_pg :hover{
-    background: #c70039;
-    color: white;
 }
